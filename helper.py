@@ -1,11 +1,12 @@
 def combine(parameter):
-    command = '{{ main }}'
+    command = parameter['main']
+    parameter.pop('main')
     repeat = {}
     i = 0
     while i < len(command):
         line = ''
         count = 0
-        space_start = i-1
+        space_start = i
         while i < len(command):
             if command[i] == '{':
                 count += 1
@@ -14,13 +15,12 @@ def combine(parameter):
                     line += command[i]
                 else:
                     line = ''
-                    space_start = i
+                    space_start = i + 1
                 count = 0
             i += 1      
             if(count == 2):
                 start = i
                 break
-            
         count = 0
         while i < len(command):
             if command[i] == '}':
@@ -37,6 +37,7 @@ def combine(parameter):
                     current = current + ' ' + str(repeat[current])
                 if current in parameter.keys():
                     value = parameter[current]
+                    parameter.pop(current)
                     if len(value) > 0:
                         endn = value[-1] == '\n'
                         value = value.split('\n')
@@ -52,7 +53,7 @@ def combine(parameter):
                             tv = line + value[0] + ('\n' if endn else '')
                     else:
                         tv = ''
-                    command = command[:space_start + 1] + tv + command[i:]
+                    command = command[:space_start] + tv + command[i:]
                     i = space_start
                 else:
                     command = command[:start] + ' ' + current + ' }}' + command[i:]
