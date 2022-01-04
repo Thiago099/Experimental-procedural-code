@@ -1,5 +1,5 @@
 def combine(parameter):
-    if not 'main' in parameter.keys():
+    if 'main' not in parameter.keys():
         return '{{ main }}'
     command = parameter['main']
     parameter.pop('main')
