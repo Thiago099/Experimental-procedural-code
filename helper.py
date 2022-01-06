@@ -20,7 +20,7 @@ def combine(parameter):
                     space_start = i + 1
                 count = 0
             i += 1      
-            if(count == 2):
+            if count == 2:
                 start = i
                 break
         count = 0
