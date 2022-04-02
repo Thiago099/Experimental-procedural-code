@@ -14,10 +14,14 @@ def combine(parameter):
                 count += 1
             else:
                 if command[i] == ' ' or command[i] == '\t':
-                    line += command[i]
+                    if(count != 0):
+                        space_start = i
+                    else:
+                        line += command[i]
                 else:
                     line = ''
                     space_start = i + 1
+                
                 count = 0
             i += 1      
             if count == 2:
@@ -32,14 +36,14 @@ def combine(parameter):
             i += 1                
             if count == 2:
                 current = command[start:i-2].strip()
-                if not current in repeat.keys() or repeat[current] == 0:
-                    repeat[current] = 1
+                if not current in repeat.keys():
+                    repeat[current] = 0
                 else:
-                    repeat[current] += 1
-                    current = current + ' ' + str(repeat[current])
+                    repeat[current] += 1 if repeat[current]+1 < len(parameter[current]) else 0
                 if current in parameter.keys():
-                    value = parameter[current]
-                    parameter.pop(current)
+                    value = parameter[current][repeat[current]] if isinstance(parameter[current], list) and repeat.get(current) else parameter[current]
+                    if(isinstance(value, list)):
+                        value = value[0]
                     if len(value) > 0:
                         endn = value[-1] == '\n'
                         value = value.split('\n')
