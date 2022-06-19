@@ -39,7 +39,8 @@ def combine(parameter):
                 if not current in repeat.keys():
                     repeat[current] = 0
                 else:
-                    repeat[current] += 1 if repeat[current]+1 < len(parameter[current]) else 0
+                    if(current) in parameter.keys():
+                        repeat[current] += 1 if repeat[current]+1 < len(parameter[current]) else 0
                 if current in parameter.keys():
                     value = parameter[current][repeat[current]] if isinstance(parameter[current], list) and repeat.get(current) else parameter[current]
                     if(isinstance(value, list)):
