@@ -65,3 +65,8 @@ def combine(parameter):
                     command = command[:start] + ' ' + current + ' }}' + command[i:]
                 break
     return command
+
+from code_tokenizer import color_by_char_type
+
+def show(object):
+    print(color_by_char_type(combine(object)))
